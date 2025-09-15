@@ -1,0 +1,609 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2575.7">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="en" class="scroll-smooth"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;Salesforce Release Strategy: An Interactive Analysis&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.jsdelivr.net/npm/chart.js"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>body {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-family: 'Inter', sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #f8fafc; /* Slate 50 */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.chart-container {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: relative;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>max-width: 600px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-left: auto;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-right: auto;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>height: 350px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>max-height: 400px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.nav-link {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: all 0.2s ease-in-out;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: relative;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.nav-link::after {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>content: '';</p>
+<p class="p1"><span class="Apple-converted-space">            </span>position: absolute;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 0;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>height: 2px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>bottom: -5px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>left: 50%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transform: translateX(-50%);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #2196F3;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transition: width 0.3s ease-in-out;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.nav-link.active {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>color: #2196F3;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>font-weight: 600;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.nav-link.active::after {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.slider-thumb::-webkit-slider-thumb {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>-webkit-appearance: none;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>appearance: none;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>height: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: #1976D2;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 50%;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>margin-top: -8px; /* Center thumb on the track */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.slider-thumb::-moz-range-thumb {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>width: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>height: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background: #1976D2;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 50%;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.root-cause-card:hover {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>transform: translateY(-5px);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.fade-in {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>animation: fadeIn 0.5s ease-in-out;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>@keyframes fadeIn {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>from { opacity: 0; transform: translateY(10px); }</p>
+<p class="p1"><span class="Apple-converted-space">            </span>to { opacity: 1; transform: translateY(0); }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.spinner {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>border-top-color: #1976D2;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>animation: spin 1s linear infinite;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>@keyframes spin {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>to { transform: rotate(360deg); }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body class="text-slate-800"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;nav class="container mx-auto px-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="flex items-center justify-between h-16"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="text-2xl font-bold text-[#0D47A1]"&gt;SFDC Release Strategy&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="hidden md:flex items-center space-x-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;a href="#current-state" class="nav-link text-slate-600 hover:text-[#2196F3] pb-1"&gt;Current State&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;a href="#customer-impact" class="nav-link text-slate-600 hover:text-[#2196F3] pb-1"&gt;Customer Impact&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;a href="#root-cause" class="nav-link text-slate-600 hover:text-[#2196F3] pb-1"&gt;Root Cause&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;a href="#path-forward" class="nav-link text-slate-600 hover:text-[#2196F3] pb-1"&gt;Path Forward&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;a href="#interactive-dashboard" class="nav-link text-slate-600 hover:text-[#2196F3] pb-1"&gt;Dashboard&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/nav&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/header&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;main class="container mx-auto p-4 md:p-8"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="current-state" class="py-16"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="text-center max-w-4xl mx-auto"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h2 class="text-4xl font-extrabold text-[#0D47A1] mb-4"&gt;The Current State: A Triannual Machine&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p class="text-lg text-slate-600 mb-8"&gt;Salesforce's core platform operates on a highly predictable, triannual release cycle. This model, a marvel of engineering logistics, provides stability and a clear roadmap. However, its rigidity is the source of a growing strategic conflict between Salesforce's operational reality and its customers' need for flexibility.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="bg-white rounded-lg shadow-xl p-8 border border-slate-200"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 class="text-2xl font-bold text-[#1976D2] mb-6"&gt;The Overlapping 11-Month Cycle&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="flex flex-col md:flex-row justify-between items-center space-y-8 md:space-y-0 text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="flex-1"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="w-24 h-24 mx-auto bg-gradient-to-br from-blue-200 to-blue-300 rounded-full flex items-center justify-center text-3xl font-bold text-[#0D47A1] shadow-inner"&gt;262&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="font-semibold mt-2"&gt;Summer '27&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="text-sm text-slate-500"&gt;Development&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="text-4xl text-blue-300 hidden md:block px-4"&gt;&amp;rarr;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="flex-1"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                             </span>&lt;div class="w-24 h-24 mx-auto bg-gradient-to-br from-blue-300 to-blue-400 rounded-full flex items-center justify-center text-3xl font-bold text-[#0D47A1] shadow-inner"&gt;260&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="font-semibold mt-2"&gt;Spring '27&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                             </span>&lt;p class="text-sm text-slate-500"&gt;Release Freeze&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                         </span>&lt;div class="text-4xl text-blue-300 hidden md:block px-4"&gt;&amp;rarr;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="flex-1"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                             </span>&lt;div class="w-24 h-24 mx-auto bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-3xl font-bold text-white shadow-inner"&gt;258&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="font-semibold mt-2"&gt;Winter '26&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="text-sm text-slate-500"&gt;Staggered Release&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p class="mt-8 text-slate-600"&gt;At any given moment, three separate releases are in different stages—development, freeze, and rollout. This concurrent process ensures a continuous flow of innovation but leaves virtually no room for deviation from the master schedule.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="customer-impact" class="py-16 bg-white rounded-2xl shadow-lg border border-slate-200"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">             </span>&lt;div class="text-center max-w-4xl mx-auto mb-12 px-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h2 class="text-4xl font-extrabold text-[#0D47A1] mb-4"&gt;A Collision Course with Customers&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p class="text-lg text-slate-600"&gt;The rigidity of the release cycle creates significant friction with top-tier enterprise customers whose business-critical events do not align with Salesforce's calendar. The trip reports reveal a pattern of denied requests, escalating frustrations, and tangible risks to major accounts.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="space-y-4 px-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;button class="customer-btn w-full text-left p-4 rounded-lg border-2 border-slate-200 bg-slate-50 hover:bg-white hover:border-[#2196F3] focus:outline-none focus:ring-2 focus:ring-[#2196F3] transition-all shadow-sm hover:shadow-md" data-customer="cvs"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h4 class="font-bold text-lg text-[#1976D2]"&gt;CVS SBE: The Attrition Risk&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="text-sm text-slate-600"&gt;Request to move a release to accommodate telesales training denied, creating risk of churn.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;button class="customer-btn w-full text-left p-4 rounded-lg border-2 border-slate-200 bg-slate-50 hover:bg-white hover:border-[#2196F3] focus:outline-none focus:ring-2 focus:ring-[#2196F3] transition-all shadow-sm hover:shadow-md" data-customer="hilti"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                             </span>&lt;h4 class="font-bold text-lg text-[#1976D2]"&gt;Hilti: The Quality &amp; Communication Gap&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                             </span>&lt;p class="text-sm text-slate-600"&gt;Unannounced, buggy Data Cloud patches caused production disruptions, eroding trust.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                         </span>&lt;button class="customer-btn w-full text-left p-4 rounded-lg border-2 border-slate-200 bg-slate-50 hover:bg-white hover:border-[#2196F3] focus:outline-none focus:ring-2 focus:ring-[#2196F3] transition-all shadow-sm hover:shadow-md" data-customer="swiggy"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                             </span>&lt;h4 class="font-bold text-lg text-[#1976D2]"&gt;Swiggy Instamart: The Critical Event&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                             </span>&lt;p class="text-sm text-slate-600"&gt;Request for a release moratorium during a mega-sale was rejected.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                 </span>&lt;div class="p-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                     </span>&lt;div id="customer-display-wrapper"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div id="customer-display" class="bg-slate-100 p-6 rounded-lg min-h-[250px] transition-all duration-300 border border-slate-200"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                             </span>&lt;h3 id="customer-name" class="text-2xl font-bold text-[#0D47A1]"&gt;Select a Customer Case&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                             </span>&lt;p id="customer-details" class="mt-4 text-slate-700"&gt;Click on a customer to the left to see the details of their release-related challenges and the business impact.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                             </span>&lt;div id="customer-ai-output" class="mt-4"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                 </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="mt-12"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                 </span>&lt;h3 class="text-2xl font-bold text-[#1976D2] mb-6 text-center"&gt;Business Disruption Impact Score&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                 </span>&lt;div class="chart-container"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;canvas id="impactChart"&gt;&lt;/canvas&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="root-cause" class="py-16"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="text-center max-w-4xl mx-auto mb-12"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h2 class="text-4xl font-extrabold text-[#0D47A1] mb-4"&gt;Root Cause: Why Is Flexibility So Hard?&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p class="text-lg text-slate-600"&gt;The inability to accommodate customer requests isn't a matter of willingness, but of deep-seated technical and architectural constraints. Decades of success have created a complex system where change is inherently difficult and risky.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="grid grid-cols-1 md:grid-cols-3 gap-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;!-- Card 1: Monolithic Architecture --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="bg-white rounded-lg shadow-lg p-6 border border-slate-200 text-center transition-all duration-300 root-cause-card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                     </span>&lt;div class="w-16 h-16 mx-auto bg-blue-100 rounded-full flex items-center justify-center mb-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;svg class="w-8 h-8 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"&gt;&lt;path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" /&gt;&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                     </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 class="text-xl font-bold text-[#0D47A1] mb-2"&gt;Monolithic Architecture&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p class="text-slate-600"&gt;The core CRM application is a tightly coupled monolith. A change in one area can have unforeseen consequences elsewhere, making it impossible to update components independently or deviate from the unified release train.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;!-- Card 2: Multi-Tenant Dependencies --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="bg-white rounded-lg shadow-lg p-6 border border-slate-200 text-center transition-all duration-300 root-cause-card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="w-16 h-16 mx-auto bg-blue-100 rounded-full flex items-center justify-center mb-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;svg class="w-8 h-8 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"&gt;&lt;path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h6.375a.625.625 0 01.625.625v3.375c0 .345-.28.625-.625.625H9v-4.625zM9 14.25h6.375a.625.625 0 01.625.625v3.375c0 .345-.28.625-.625.625H9v-4.625z" /&gt;&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 class="text-xl font-bold text-[#0D47A1] mb-2"&gt;Multi-Tenant Dependencies&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p class="text-slate-600"&gt;Customers share infrastructure. As seen with AWS APN, upgrading one customer on an instance requires upgrading all others, necessitating unanimous agreement that is difficult or impossible to achieve.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;!-- Card 3: Process &amp; Policy Rigidity --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="bg-white rounded-lg shadow-lg p-6 border border-slate-200 text-center transition-all duration-300 root-cause-card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="w-16 h-16 mx-auto bg-blue-100 rounded-full flex items-center justify-center mb-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                       </span>&lt;svg class="w-8 h-8 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"&gt;&lt;path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" /&gt;&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 class="text-xl font-bold text-[#0D47A1] mb-2"&gt;Process &amp; Policy Rigidity&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p class="text-slate-600"&gt;Years of optimizing for stability have resulted in rigid release policies. While effective at preventing chaos, these policies lack the mechanisms to handle valid exceptions for customers with critical business needs.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="path-forward" class="py-16 bg-white rounded-2xl shadow-lg border border-slate-200"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="text-center max-w-4xl mx-auto mb-12 px-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h2 class="text-4xl font-extrabold text-[#0D47A1] mb-4"&gt;The Path Forward: The "North Star" Vision&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p class="text-lg text-slate-600"&gt;Internal strategy documents like the "Change &amp; Release North Star" acknowledge these challenges. The long-term vision is a radical transformation from the current model to one of continuous, flexible, and customer-centric delivery.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">             </span>&lt;div class="relative pl-8 border-l-4 border-[#64B5F6]"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="mb-12 relative"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="absolute w-6 h-6 bg-[#1976D2] rounded-full -left-[14px] mt-1.5 border-4 border-white ring-4 ring-blue-300"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="pl-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3 class="text-2xl font-bold text-[#0D47A1]"&gt;Short-Term (Now - 12 Months)&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="text-slate-600 mt-2"&gt;Focus on communication and process alignment. Standardize release processes for all clouds (like Data Cloud), improve communication, and pilot minor schedule adjustments (+/- 1 week) for top customers on Hyperforce.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="mb-12 relative"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="absolute w-6 h-6 bg-[#1976D2] rounded-full -left-[14px] mt-1.5 border-4 border-white"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                     </span>&lt;div class="pl-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3 class="text-2xl font-bold text-[#0D47A1]"&gt;Mid-Term (1-3 Years)&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="text-slate-600 mt-2"&gt;Begin the technical transformation. Aggressively invest in decoupling the monolith, pilot true continuous delivery for an isolated service, and use feature flags to separate code deployment from feature activation.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="relative"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                     </span>&lt;div class="absolute w-6 h-6 bg-[#1976D2] rounded-full -left-[14px] mt-1.5 border-4 border-white"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                     </span>&lt;div class="pl-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3 class="text-2xl font-bold text-[#0D47A1]"&gt;Long-Term (3+ Years)&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="text-slate-600 mt-2"&gt;Achieve the "North Star". Realize a future of autonomous, component-based updates where customers can choose a release cadence (e.g., "stable" vs. "feature" tracks) that aligns with their own business strategy and risk tolerance.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="interactive-dashboard" class="py-16"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="text-center max-w-4xl mx-auto mb-12"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h2 class="text-4xl font-extrabold text-[#0D47A1] mb-4"&gt;Interactive Dashboard: The Strategic Trade-Offs&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p class="text-lg text-slate-600"&gt;What would it take to increase customer flexibility? Use the sliders below to explore the trade-offs between release velocity, customer flexibility, and the required engineering investment. See how your decisions impact key outcomes.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="bg-white p-8 rounded-2xl shadow-xl border border-slate-200"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="grid grid-cols-1 lg:grid-cols-2 gap-12"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3 class="text-2xl font-bold text-[#1976D2] mb-6"&gt;Control Levers&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="space-y-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;label for="velocity" class="font-semibold text-slate-700"&gt;Release Velocity&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;input id="velocity" type="range" min="1" max="100" value="20" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer slider-thumb"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div class="flex justify-between text-sm text-slate-500 mt-1"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;span&gt;Triannual&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;span&gt;Continuous&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                             </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;label for="flexibility" class="font-semibold text-slate-700"&gt;Customer Flexibility&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;input id="flexibility" type="range" min="1" max="100" value="10" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer slider-thumb"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                 </span>&lt;div class="flex justify-between text-sm text-slate-500 mt-1"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;span&gt;Rigid&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;span&gt;On-Demand&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                             </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;label for="investment" class="font-semibold text-slate-700"&gt;Engineering Investment&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;input id="investment" type="range" min="1" max="100" value="30" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer slider-thumb"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                 </span>&lt;div class="flex justify-between text-sm text-slate-500 mt-1"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;span&gt;Maintain&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;span&gt;Transform&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                         </span>&lt;div id="summaryBox" class="mt-8 p-4 rounded-lg border flex items-start space-x-3 transition-all"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div id="summaryIcon" class="flex-shrink-0"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                             </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                 </span>&lt;h4 id="summaryTitle" class="font-bold"&gt;Strategic Summary&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                 </span>&lt;p id="summaryText" class="mt-1 text-sm"&gt;Current state: A stable but inflexible model with moderate engineering investment. Customer satisfaction is at risk due to rigidity.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                             </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                         </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                         </span>&lt;button id="advisorBtn" class="w-full mt-4 px-6 py-2 bg-[#0D47A1] text-white font-semibold rounded-lg shadow-md hover:bg-[#1976D2] transition-colors duration-300 flex items-center justify-center space-x-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"&gt;&lt;path d="M10 3.5a1.5 1.5 0 01.956 2.82l4.238 2.966a.25.25 0 00.312-.313l-1.02-2.38A1.5 1.5 0 0115.5 5.5h-1a.5.5 0 000 1h1a.5.5 0 01 .39.812l-3.32 2.324a.25.25 0 00-.14.218V12a.5.5 0 001 0v-2.13a1.5 1.5 0 113 0V12a.5.5 0 001 0v-2.13a2.5 2.5 0 10-4.218-1.886l-4.238-2.966A1.5 1.5 0 0110 3.5zM4.5 5.5a.5.5 0 000 1h1a.5.5 0 000-1h-1zM6 8a.5.5 0 01.5-.5h1a.5.5 0 010 1h-1A.5.5 0 016 8zM5 10a.5.5 0 000 1h1a.5.5 0 000-1h-1z" /&gt;&lt;path d="M8.5 6.5a.5.5 0 000 1h1a.5.5 0 000-1h-1zM7 12a.5.5 0 01.5-.5h1a.5.5 0 010 1h-1A.5.5 0 017 12z" /&gt;&lt;path fill-rule="evenodd" d="M3 14a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" /&gt;&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span&gt;✨ Get AI Strategic Advice&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div id="advisorOutput" class="mt-4 p-4 rounded-lg bg-slate-50 border border-slate-200 text-sm text-slate-700 hidden"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3 class="text-2xl font-bold text-[#1976D2] mb-6"&gt;Projected Outcomes&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="chart-container h-96"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;canvas id="dashboardChart"&gt;&lt;/canvas&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/main&gt;</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- Gemini API Call Function ---</p>
+<p class="p1"><span class="Apple-converted-space">        </span>async function callGeminiAPI(prompt, retries = 3, delay = 1000) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const apiKey = ""; // Canvas will provide this</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const payload = { contents: [{ parts: [{ text: prompt }] }] };</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>for (let i = 0; i &lt; retries; i++) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>try {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const response = await fetch(apiUrl, {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>method: 'POST',</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>headers: { 'Content-Type': 'application/json' },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>body: JSON.stringify(payload)</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>});</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const result = await response.json();</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>if (result.candidates?.[0]?.content?.parts?.[0]?.text) {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>let text = result.candidates[0].content.parts[0].text;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>// Basic markdown to HTML conversion</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>text = text.replace(/\*\*(.*?)\*\*/g, '&lt;strong&gt;$1&lt;/strong&gt;');<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                        </span>text = text.replace(/\n\s?\*\s/g, '&lt;br&gt;• ');<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                        </span>return text;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>return "No content generated or unexpected response structure.";</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>} catch (error) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>console.error(`Attempt ${i + 1} failed:`, error);</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>if (i === retries - 1) {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>return "Failed to generate a response after multiple attempts. Please check the console for errors.";</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>await new Promise(res =&gt; setTimeout(res, delay * Math.pow(2, i)));</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.addEventListener('DOMContentLoaded', () =&gt; {</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const customerData = {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>cvs: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>name: 'CVS SBE: The Attrition Risk',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>details: 'CVS requested their Winter \'26 release be moved from October to August to align with their critical telesales training period. The request was denied due to the monolith\'s architecture, which prevents off-cycle upgrades. This created a significant risk of churn for a major account.'</p>
+<p class="p1"><span class="Apple-converted-space">                </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>hilti: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>name: 'Hilti: The Quality &amp; Communication Gap',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>details: 'Hilti, among other customers, experienced major production disruptions from unannounced and buggy Data Cloud patches. This highlighted a stark contrast with the mature Core release process, eroding trust due to a lack of documentation, predictability, and quality control.'</p>
+<p class="p1"><span class="Apple-converted-space">                </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>swiggy: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>name: 'Swiggy Instamart: The Critical Event Conflict',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>details: 'Swiggy requested a release moratorium during their "Quick India Movement 2025" mega-sale, a business-critical event. The request was rejected based on policy, demonstrating the conflict between Salesforce\'s rigid schedule and customer\'s peak business periods.'</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const customerBtns = document.querySelectorAll('.customer-btn');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const customerDisplayWrapper = document.getElementById('customer-display-wrapper');</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>customerDisplayWrapper.addEventListener('click', async (event) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const explainBtn = event.target.closest('.explain-btn');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (explainBtn) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const customer = explainBtn.dataset.customer;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const outputDiv = document.getElementById('customer-ai-output');</p>
+<p class="p2"><span class="Apple-converted-space">                    </span></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>explainBtn.disabled = true;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>explainBtn.innerHTML = `&lt;div class="spinner w-4 h-4 rounded-full border-2 border-slate-200"&gt;&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>outputDiv.innerHTML = '';</p>
+<p class="p2"><span class="Apple-converted-space">                    </span></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const prompt = `You are a customer success manager. Briefly explain the frustration of ${customerData[customer].name} in 1-2 sentences from their perspective, based on this situation: "${customerData[customer].details}". Frame it as a quote.`;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const explanation = await callGeminiAPI(prompt);</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>outputDiv.innerHTML = `&lt;div class="mt-4 p-3 bg-blue-50 border-l-4 border-blue-300 text-blue-800 text-sm"&gt;&lt;em&gt;${explanation}&lt;/em&gt;&lt;/div&gt;`;</p>
+<p class="p2"><span class="Apple-converted-space">                    </span></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>explainBtn.disabled = false;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>explainBtn.innerHTML = '✨ Explain This Case';</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>customerBtns.forEach(btn =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>btn.addEventListener('click', () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const customer = btn.dataset.customer;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const newHtml = `</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div id="customer-display" class="bg-slate-100 p-6 rounded-lg min-h-[250px] transition-all duration-300 border border-slate-200 fade-in"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h3 id="customer-name" class="text-2xl font-bold text-[#0D47A1]"&gt;${customerData[customer].name}&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p id="customer-details" class="mt-4 text-slate-700"&gt;${customerData[customer].details}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;button class="explain-btn mt-4 px-3 py-1 bg-slate-200 text-slate-700 text-sm font-semibold rounded-md hover:bg-slate-300 transition-colors" data-customer="${customer}"&gt;✨ Explain This Case&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div id="customer-ai-output"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;`;</p>
+<p class="p2"><span class="Apple-converted-space">                    </span></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>customerDisplayWrapper.innerHTML = newHtml;</p>
+<p class="p2"><span class="Apple-converted-space">                    </span></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>customerBtns.forEach(b =&gt; b.classList.remove('bg-white', 'border-[#2196F3]', 'shadow-lg'));</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>btn.classList.add('bg-white', 'border-[#2196F3]', 'shadow-lg');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>});</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const wrapLabel = (label) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const maxLength = 16;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (typeof label !== 'string' || label.length &lt;= maxLength) return label;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const words = label.split(' ');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>let lines = [];</p>
+<p class="p1"><span class="Apple-converted-space">                </span>let currentLine = '';</p>
+<p class="p1"><span class="Apple-converted-space">                </span>words.forEach(word =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>if ((currentLine + ' ' + word).trim().length &gt; maxLength) {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>lines.push(currentLine);</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>currentLine = word;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>currentLine = (currentLine + ' ' + word).trim();</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>});</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (currentLine) lines.push(currentLine);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>return lines;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const tooltipTitleCallback = (tooltipItems) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const item = tooltipItems[0];</p>
+<p class="p1"><span class="Apple-converted-space">                </span>let label = item.chart.data.labels[item.dataIndex];</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (Array.isArray(label)) return label.join(' ');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>return label;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const impactCtx = document.getElementById('impactChart').getContext('2d');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>new Chart(impactCtx, {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>type: 'bar',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>data: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>labels: ['CVS SBE', 'Hilti Corp.', 'Swiggy', 'AWS APN', 'Humana Inc.'].map(wrapLabel),</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>datasets: [{</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>label: 'Disruption Score (1-10)',</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>data: [9, 8, 7, 5, 4],</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>backgroundColor: ['#0D47A1', '#1976D2', '#2196F3', '#64B5F6', '#BBDEFB'],</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>borderColor: '#ffffff',</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>borderWidth: 2,</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>borderRadius: 5,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}]</p>
+<p class="p1"><span class="Apple-converted-space">                </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>options: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>indexAxis: 'y',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>responsive: true,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>maintainAspectRatio: false,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>plugins: {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>legend: { display: false },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>tooltip: { callbacks: { title: tooltipTitleCallback } }</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>scales: {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>x: { beginAtZero: true, max: 10 }</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const velocitySlider = document.getElementById('velocity');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const flexibilitySlider = document.getElementById('flexibility');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const investmentSlider = document.getElementById('investment');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const summaryBox = document.getElementById('summaryBox');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const summaryIcon = document.getElementById('summaryIcon');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const summaryTitle = document.getElementById('summaryTitle');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const summaryText = document.getElementById('summaryText');</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const dashboardCtx = document.getElementById('dashboardChart').getContext('2d');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const dashboardChart = new Chart(dashboardCtx, {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>type: 'bar',</p>
+<p class="p1"><span class="Apple-converted-space">                </span>data: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>labels: ['Customer Sat.', 'Release Stability', 'Innovation Speed', 'Eng. Cost'],</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>datasets: [{</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>label: 'Outcome Score',</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>data: [50, 90, 40, 30],</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>backgroundColor: ['#2196F3', '#0D47A1', '#64B5F6', '#f39c12'] // Changed cost color</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}]</p>
+<p class="p1"><span class="Apple-converted-space">                </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>options: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>responsive: true,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>maintainAspectRatio: false,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>scales: { y: { beginAtZero: true, max: 100 } },</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>plugins: {<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">                        </span>legend: { display: false },</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>tooltip: { callbacks: { title: tooltipTitleCallback } }</p>
+<p class="p1"><span class="Apple-converted-space">                     </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const summaryStates = {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>warning: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>title: "High Risk Scenario",</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>icon: `&lt;svg class="w-6 h-6 text-red-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"&gt;&lt;path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126z" /&gt;&lt;/svg&gt;`,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>classes: "bg-red-50 border-red-200"</p>
+<p class="p1"><span class="Apple-converted-space">                </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>goal: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>title: "North Star Vision",</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>icon: `&lt;svg class="w-6 h-6 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"&gt;&lt;path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" /&gt;&lt;/svg&gt;`,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>classes: "bg-green-50 border-green-200"</p>
+<p class="p1"><span class="Apple-converted-space">                </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                </span>balanced: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>title: "Strategic Summary",</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>icon: `&lt;svg class="w-6 h-6 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"&gt;&lt;path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.311a15.045 15.045 0 01-4.5 0m3.75 2.311a15.045 15.045 0 01-4.5 0M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /&gt;&lt;/svg&gt;`,</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>classes: "bg-blue-50 border-blue-200"</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>function updateDashboard() {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const velocity = parseInt(velocitySlider.value);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const flexibility = parseInt(flexibilitySlider.value);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const investment = parseInt(investmentSlider.value);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>let customerSat = (flexibility * 0.7) + (velocity * 0.1) + (investment * 0.2);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>let stability = Math.max(10, 100 - (velocity * 0.5) - (flexibility * 0.3) + (investment * 0.2));</p>
+<p class="p1"><span class="Apple-converted-space">                </span>let innovation = (velocity * 0.6) + (investment * 0.4);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>let cost = (flexibility * 0.4) + (velocity * 0.2) + (investment * 0.8);</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>customerSat = Math.min(100, Math.max(10, customerSat));</p>
+<p class="p1"><span class="Apple-converted-space">                </span>stability = Math.min(100, Math.max(10, stability));</p>
+<p class="p1"><span class="Apple-converted-space">                </span>innovation = Math.min(100, Math.max(10, innovation));</p>
+<p class="p1"><span class="Apple-converted-space">                </span>cost = Math.min(100, Math.max(10, cost));</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>dashboardChart.data.datasets[0].data = [customerSat, stability, innovation, cost];</p>
+<p class="p1"><span class="Apple-converted-space">                </span>dashboardChart.update();</p>
+<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>let state = summaryStates.balanced;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>let text = "A balanced approach. Adjust the levers to explore different strategies and their potential outcomes for Salesforce and its customers.";</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (investment &lt; 50 &amp;&amp; flexibility &gt; 50) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>state = summaryStates.warning;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>text = "Attempting high customer flexibility without significant engineering investment leads to decreased stability and high risk of failure.";</p>
+<p class="p1"><span class="Apple-converted-space">                </span>} else if (investment &gt; 70 &amp;&amp; flexibility &gt; 70) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>state = summaryStates.goal;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>text = "High investment enables a decoupled architecture, allowing for both rapid innovation and high customer flexibility without sacrificing stability.";</p>
+<p class="p1"><span class="Apple-converted-space">                </span>} else if (velocity &gt; 80 &amp;&amp; investment &lt; 60) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>state = summaryStates.warning;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>text = "Pushing for continuous delivery without transforming the underlying architecture will severely compromise release stability.";</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>summaryBox.className = "mt-8 p-4 rounded-lg border flex items-start space-x-3 transition-all " + state.classes;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>summaryIcon.innerHTML = state.icon;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>summaryTitle.textContent = state.title;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>summaryText.textContent = text;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// --- AI Strategic Advisor ---</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const advisorBtn = document.getElementById('advisorBtn');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const advisorOutput = document.getElementById('advisorOutput');</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>advisorBtn.addEventListener('click', async () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>advisorBtn.disabled = true;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>advisorOutput.classList.remove('hidden');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>advisorOutput.innerHTML = `&lt;div class="flex items-center justify-center"&gt;&lt;div class="spinner w-6 h-6 rounded-full border-2 border-slate-200"&gt;&lt;/div&gt;&lt;/div&gt;`;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>const v = velocitySlider.value;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const f = flexibilitySlider.value;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const i = investmentSlider.value;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const [cs, s, inn, c] = dashboardChart.data.datasets[0].data;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>const prompt = `You are a Salesforce strategy consultant. Given the following strategic inputs for a release strategy:</p>
+<p class="p1"><span class="Apple-converted-space">                </span>- Release Velocity: ${v}/100 (closer to Continuous)</p>
+<p class="p1"><span class="Apple-converted-space">                </span>- Customer Flexibility: ${f}/100 (closer to On-Demand)</p>
+<p class="p1"><span class="Apple-converted-space">                </span>- Engineering Investment: ${i}/100 (closer to Transform)</p>
+<p class="p1"><span class="Apple-converted-space">                </span>This results in the following projected outcomes:</p>
+<p class="p1"><span class="Apple-converted-space">                </span>- Customer Satisfaction: ${Math.round(cs)}/100</p>
+<p class="p1"><span class="Apple-converted-space">                </span>- Release Stability: ${Math.round(s)}/100</p>
+<p class="p1"><span class="Apple-converted-space">                </span>- Innovation Speed: ${Math.round(inn)}/100</p>
+<p class="p1"><span class="Apple-converted-space">                </span>- Engineering Cost: ${Math.round(c)}/100</p>
+<p class="p1"><span class="Apple-converted-space">                </span>Provide a brief (3-4 sentences) strategic analysis of this scenario. What are the key risks and opportunities of this approach?`;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>const advice = await callGeminiAPI(prompt);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>advisorOutput.innerHTML = advice;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>advisorBtn.disabled = false;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>[velocitySlider, flexibilitySlider, investmentSlider].forEach(slider =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>slider.addEventListener('input', updateDashboard);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const navLinks = document.querySelectorAll('.nav-link');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const sections = document.querySelectorAll('main section');</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>window.addEventListener('scroll', () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>let current = '';</p>
+<p class="p1"><span class="Apple-converted-space">                </span>sections.forEach(section =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const sectionTop = section.offsetTop;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>if (pageYOffset &gt;= sectionTop - 80) {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>current = section.getAttribute('id');</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>navLinks.forEach(link =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>link.classList.remove('active');</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>if (link.getAttribute('href') === `#${current}`) {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>link.classList.add('active');</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>});</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">             </span>// Initial calls</p>
+<p class="p1"><span class="Apple-converted-space">             </span>customerBtns[0].click();</p>
+<p class="p1"><span class="Apple-converted-space">             </span>updateDashboard();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+<p class="p2"><br></p>
+<p class="p2"><br></p>
+</body>
+</html>
